@@ -22,14 +22,17 @@ def invert_dict(D2):
         if val not in inv: inv[val] = [key]
         else: inv[val].append(key)
     return inv
-print invert_dict(D2)
+#print invert_dict(D2)
 D2 = invert_dict(D2)
-
+Z = []
 for i in K:
     v = K[x]
     v += N
     if v > 26:
         v -= 26
     result = D2.get(v)
-    print result
+    Z += result
     x += 1
+    
+result = ''.join(Z)
+print result
