@@ -23,6 +23,7 @@ for i in B:
     J = D2.get(i)
     K.append(J)
 
+
 def invert_dict(D2):
     inv = dict()
     for key in D2:
@@ -39,6 +40,7 @@ for i in K:
     for m in counter:
         if m == l:
             Z += ' '
+            l += 1
     v = K[x]
     v += N
     if v > 26:
