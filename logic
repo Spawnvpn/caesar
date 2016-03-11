@@ -6,12 +6,20 @@ N = int(N)
 D2 = {}
 K = []
 x = 0
+j = 0
+counter = []
 for i in A:
     C += 1
     D = {i: C}
     D2.update(D)
 
 for i in B:
+    j += 1
+    if i == " ":
+        i = i.replace(' ', '')
+        counter.append(j)
+#        print counter
+        continue
     J = D2.get(i)
     K.append(J)
 
@@ -25,7 +33,12 @@ def invert_dict(D2):
 #print invert_dict(D2)
 D2 = invert_dict(D2)
 Z = []
+l = 0
 for i in K:
+    l += 1
+    for m in counter:
+        if m == l:
+            Z += ' '
     v = K[x]
     v += N
     if v > 26:
@@ -33,6 +46,7 @@ for i in K:
     result = D2.get(v)
     Z += result
     x += 1
-    
+#    print Z
+
 result = ''.join(Z)
 print result
