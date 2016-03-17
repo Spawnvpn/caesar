@@ -1,0 +1,56 @@
+body {
+    background: white
+}
+
+font {
+    font-family: arial;
+}
+
+header {
+    margin-left: 350px;
+    margin-right: 350px;
+    color: #778899;
+    border-radius: 1px;
+}
+
+.displace {
+    position: absolute;
+    border-radius: 4px;
+    margin-top: 110px;
+    margin-left: 795px;
+}
+
+.arrow_right {
+    position: absolute;
+    margin-left: 795px;
+    margin-top: 170px;
+}
+
+.in {
+    position: absolute;
+    border-radius: 10px;
+    color: #778899;
+    height: 300px;
+    width: 300px;
+    margin-top: 20px;
+    margin-left: 450px;
+    resize: none;
+}
+
+.out {
+    position: absolute;
+    resize: none;
+    border-radius: 10px;
+    color: #778899;
+    height: 300px;
+    width: 300px;
+    margin-top: 15px;
+    margin-left: 900px;
+    resize: none;
+}
+
+.chart_div {
+    position: absolute;
+    margin-left: 380px;
+    margin-top: 320px;
+}
