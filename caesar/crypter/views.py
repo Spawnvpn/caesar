@@ -12,7 +12,7 @@ def ciphertext(request):
         text = request.POST.get("text")
         number = request.POST.get("number")
         if not is_english_string(text):
-            crypted_text = "Only english letters allowed"
+            crypted_text = "Only english character are allowed"
         elif text and number:
             crypted_text = logic.get_crypt_text(text, number)
         else:
@@ -28,7 +28,7 @@ def chart(request):
         text = request.POST.get("text")
         number = request.POST.get("number")
         if not is_english_string(text):
-            crypted_text = "Only english character allowed"
+            crypted_text = "Only english character are allowed"
         elif text and number:
             crypted_text = logic.get_crypt_text(text, number)
         else:

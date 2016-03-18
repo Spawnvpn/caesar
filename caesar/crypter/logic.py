@@ -1,5 +1,6 @@
 def get_crypt_text(text, number):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    symbols = "~!@#$%^&*()_-=+{}|:\"?<>[];'/.,0123456789"
     entered_text = text
     displace = number
 
@@ -7,6 +8,10 @@ def get_crypt_text(text, number):
     if not entered_text:
         crypted_text = "Enter text"
         return crypted_text
+    for char in entered_text:
+        if char in symbols:
+            crypted_text = "Only english character are allowed"
+            return crypted_text
     entered_text = entered_text.replace("\r\n", " ")
     if not entered_text.islower():
         entered_text = entered_text.lower()
@@ -74,26 +79,16 @@ def invert_dict(inv_dict):
 
 
 def symbol_count(code_text):
-    symbols = code_text
     count_dict = {}
-
-    # Cycle to count the number of letters
-    for i in symbols:
-        if not i in count_dict:
-            count_dict[i] = 0
-        count_dict[i] += 1
-        symbols = symbols.split(i)  # Cut out counted letters
-        t = symbols
-        symbols = ''
-        for j in t:  # For cut split
-            symbols += j
+    code_text = code_text.replace(' ', '')
+    for char in code_text:  # Cycle to count the number of letters
+        count_dict[char] = code_text.count(char)
 
     # To obtain an acceptable format for the list of chart
     cort = count_dict.items()
-    list = []
-    res = []
+    final_list = []
     for i in cort:
-        res[:] = i
-        list.append(res[:])
-    return list
+        res = list(i)
+        final_list.append(res)
+    return final_list
 
