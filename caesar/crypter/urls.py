@@ -16,12 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 
 from crypter.views import index
-from crypter.views import ajax_func
+from crypter.views import ciphertext
 from crypter.views import chart
 
 
 urlpatterns = [
     url(r'^index/$', view=index),
-    url(r'^index/ajax_func/$', view=ajax_func),
+    url(r'^index/ciphertext/$', view=ciphertext),
     url(r'^index/chart/$', view=chart),
 ]

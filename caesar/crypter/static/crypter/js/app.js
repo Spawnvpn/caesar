@@ -4,6 +4,7 @@ google.charts.load('current', {'packages':['corechart']});
 // Set a callback to run when the Google Visualization API is loaded.
 google.charts.setOnLoadCallback(drawChart);
 
+// Function to sending text and receiving data to plot a chart
 function drawChart() {
     var msg   = $('#uncode_text').serialize();
             console.log(msg);
@@ -13,8 +14,6 @@ function drawChart() {
             data: msg,
             success: function(data) {
                 var chart_data = data['chart_text'];
-                console.log("result:");
-                console.log(chart_data);
                 addRows(chart_data)
             },
             error:  function(xhr, str){
@@ -37,21 +36,19 @@ function drawChart() {
         chart.draw(data_table, options);
     }
 }
-
+// Function to send text and receive ciphertext in a text field for the result
 function call() {
     var msg   = $('#uncode_text').serialize();
     console.log(msg);
     $.ajax({
     type: 'POST',
-    url: 'ajax_func/',
+    url: 'ciphertext/',
     data: msg,
     success: function(data) {
-        console.log("data:");
-        console.log(data);
         $('#code_text').html(data['code_text']);
     },
     error:  function(xhr, str){
-    alert('Возникла ошибка: ' + xhr.responseCode);
+    alert('Error: ' + xhr.responseCode);
     }
 });
 }

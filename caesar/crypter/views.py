@@ -7,11 +7,13 @@ def index(request):
     return render(request, template_name="index.html")
 
 
-def ajax_func(request):
+def ciphertext(request):
     if request.is_ajax():
         text = request.POST.get("text")
         number = request.POST.get("number")
-        if text and number >= 0 and is_english_string(text):
+        if not is_english_string(text):
+            crypted_text = "Only english letters allowed"
+        elif text and number:
             crypted_text = logic.get_crypt_text(text, number)
         else:
             crypted_text = text
@@ -25,7 +27,9 @@ def chart(request):
     if request.is_ajax():
         text = request.POST.get("text")
         number = request.POST.get("number")
-        if text and number >= 0:
+        if not is_english_string(text):
+            crypted_text = "Only english character allowed"
+        elif text and number:
             crypted_text = logic.get_crypt_text(text, number)
         else:
             crypted_text = text
@@ -36,15 +40,10 @@ def chart(request):
         return JsonResponse(context)
 
 
-def is_english_string(entered_text):
-    """
-   Checks whether given string
-   containing only English characters
-   :type entered_text: str
-   """
+def is_english_string(text):
     try:
-        entered_text.decode("ascii")
-    except UnicodeDecodeError:
+        text.decode("ascii")
+    except UnicodeEncodeError:
         return False
     else:
         return True
