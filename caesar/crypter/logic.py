@@ -1,6 +1,6 @@
 def get_crypt_text(text, number):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    symbols = "~!@#$%^&*()_-=+{}|:\"?<>[];'/.,0123456789"
+    symbols = "~!@#$%^&*()_-=+{}|:\"?<>[];'/.,0123456789 "
     entered_text = text
     displace = number
 
@@ -8,10 +8,6 @@ def get_crypt_text(text, number):
     if not entered_text:
         crypted_text = "Enter text"
         return crypted_text
-    for char in entered_text:
-        if char in symbols:
-            crypted_text = "Only english character are allowed"
-            return crypted_text
     entered_text = entered_text.replace("\r\n", " ")
     if not entered_text.islower():
         entered_text = entered_text.lower()
@@ -33,28 +29,29 @@ def get_crypt_text(text, number):
         collect_dict = {i: alphabet_counter}
         associated_dict.update(collect_dict)
 
-# Finding and storing the positions of whitespace in the entered text
+# Finding and storing the positions of symbols in the entered text
     et_count = 0
-    space_position = []
+    symbol_position = {}
     letter_position = []
-    for i in entered_text:
+    for char in entered_text:
         et_count += 1
-        if i == " ":
-            i == i.replace(' ', '')
-            space_position.append(et_count)
+        if char in symbols:
+            tempo = dict.fromkeys([et_count], char)
+            symbol_position.update(tempo)
             continue
-        j = associated_dict.get(i)
+        j = associated_dict.get(char)
         letter_position.append(j)
 
     associated_dict = invert_dict(associated_dict)
-    lp_count = 0  # Counter for the return of whitespaces to its position in the ciphertext
+    lp_count = 0  # Counter for the return of symbols to its position in the ciphertext
     lp_iter = 0
-    code_list = []  # List to collect the ciphertext and whitespaces
+    code_list = []  # List to collect the ciphertext and symbols
+    dynamic_sp = symbol_position.copy()
     for i in letter_position:
         lp_count += 1
-        for j in space_position:  # Cycle for the return whitespaces
+        for j in symbol_position:  # Cycle for the return symbols
             if j == lp_count:     # to its position in the ciphertext
-                code_list += ' '
+                code_list += dynamic_sp.pop(j)
                 lp_count += 1
         v = letter_position[lp_iter]  # Take the position of each
         v += displace                 # letter and add the displace
@@ -64,6 +61,8 @@ def get_crypt_text(text, number):
         code_list += result              # from the associated_dict
         lp_iter += 1
     crypted_text = ''.join(code_list)  # Transfer list in a string
+    for i in dynamic_sp:
+        crypted_text += symbol_position[i]
     return crypted_text
 
 
@@ -80,7 +79,10 @@ def invert_dict(inv_dict):
 
 def symbol_count(code_text):
     count_dict = {}
-    code_text = code_text.replace(' ', '')
+    symbols = "~!@#$%^&*()_-=+{}|:\"?<>[];'/.,0123456789 "
+    for symbol in symbols:
+        if symbol in symbols:
+            code_text = code_text.replace(symbol, '')
     for char in code_text:  # Cycle to count the number of letters
         count_dict[char] = code_text.count(char)
 
