@@ -1,13 +1,14 @@
+SYMBOLS_TO_IGNORE = "~!@#$%^&*()_-=+{}|:\"?<>[];'/.,0123456789 "
+
+
 def get_crypt_text(text, number):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    symbols = "~!@#$%^&*()_-=+{}|:\"?<>[];'/.,0123456789 "
     entered_text = text
     displace = number
 
-# Validation of displace and text entered by user
+    # Validation of displace and text entered by user
     if not entered_text:
-        crypted_text = "Enter text"
-        return crypted_text
+        return "Enter text"
     entered_text = entered_text.replace("\r\n", " ")
     if not entered_text.islower():
         entered_text = entered_text.lower()
@@ -21,7 +22,7 @@ def get_crypt_text(text, number):
     if displace > 26:
         displace %= 26
 
-# Associating dict with the position in the alphabet
+    # Associating dict with the position in the alphabet
     associated_dict = {}
     alphabet_counter = 0
     for i in alphabet:
@@ -29,13 +30,13 @@ def get_crypt_text(text, number):
         collect_dict = {i: alphabet_counter}
         associated_dict.update(collect_dict)
 
-# Finding and storing the positions of symbols in the entered text
+    # Finding and storing the positions of symbols in the entered text
     et_count = 0
     symbol_position = {}
     letter_position = []
     for char in entered_text:
         et_count += 1
-        if char in symbols:
+        if char in SYMBOLS_TO_IGNORE:
             tempo = dict.fromkeys([et_count], char)
             symbol_position.update(tempo)
             continue
@@ -43,14 +44,15 @@ def get_crypt_text(text, number):
         letter_position.append(j)
 
     associated_dict = invert_dict(associated_dict)
-    lp_count = 0  # Counter for the return of symbols to its position in the ciphertext
+    # Counter for the return of symbols to its position in the ciphertext
+    lp_count = 0
     lp_iter = 0
     code_list = []  # List to collect the ciphertext and symbols
     dynamic_sp = symbol_position.copy()
     for i in letter_position:
         lp_count += 1
         for j in symbol_position:  # Cycle for the return symbols
-            if j == lp_count:     # to its position in the ciphertext
+            if j == lp_count:      # to its position in the ciphertext
                 code_list += dynamic_sp.pop(j)
                 lp_count += 1
         v = letter_position[lp_iter]  # Take the position of each
@@ -79,12 +81,10 @@ def invert_dict(inv_dict):
 
 def symbol_count(code_text):
     count_dict = {}
-    symbols = "~!@#$%^&*()_-=+{}|:\"?<>[];'/.,0123456789 "
-    for symbol in symbols:
-        if symbol in symbols:
-            code_text = code_text.replace(symbol, '')
+
     for char in code_text:  # Cycle to count the number of letters
-        count_dict[char] = code_text.count(char)
+        if char not in SYMBOLS_TO_IGNORE:
+            count_dict[char] = code_text.count(char)
 
     # To obtain an acceptable format for the list of chart
     cort = count_dict.items()
